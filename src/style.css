@@ -513,6 +513,15 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.m-8 {
+  margin: 2rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -523,6 +532,10 @@ video {
   margin-right: 12rem;
 }
 
+.flex {
+  display: flex;
+}
+
 .grid {
   display: grid;
 }
@@ -531,8 +544,20 @@ video {
   height: 24rem;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
 .w-auto {
   width: auto;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .gap-4 {
@@ -564,6 +589,15 @@ video {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.font-magic {
+  font-family: Beleren\ Bold, sans-serif;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
 }
 
 .font-bold {

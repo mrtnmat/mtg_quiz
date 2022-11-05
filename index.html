@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cardart Quiz</title>
-    <link rel="stylesheet" href="src/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-  </head>
-  <body>
-  <div id="immagine-carta" class="h-96 bg-no-repeat bg-center"></div>
-  <div class="grid gap-4 my-6 mx-48">
-    <div class="w-auto">
-      <button id="answer0" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Nome della Prima Carta</button>
-    </div>
-    <div class="">
-      <button id="answer1" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded ">Nome della Seconda Carta</button>
-    </div>
-    <div class="">
-      <button id="answer2" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Nome della Terza Carta</button>
-    </div>
-    <div class="">
-      <button id="answer3" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Nome della Quarta Carta</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cardart Quiz</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="src/style.css">
+  <link href="https://unpkg.com/@saeris/typeface-beleren-bold@latest/index.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+  <div id="flex-container" class="flex flex-col w-4/5 mx-auto items-center">
+    <div id="titolo" class="text-6xl font-magic m-8">Magic the Gathering — Quiz</div>
+    <div id="sottotitolo">Indovina il nome della carta dall'immagine</div>
+    <div id="immagine-carta" class="h-96 bg-no-repeat bg-center"></div>
+    <div class="grid gap-4 my-6 mx-48">
+      <div class="w-auto">
+        <button id="answer0" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Nome della Prima Carta</button>
+      </div>
+      <div class="">
+        <button id="answer1" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded ">Nome della Seconda Carta</button>
+      </div>
+      <div class="">
+        <button id="answer2" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Nome della Terza Carta</button>
+      </div>
+      <div class="">
+        <button id="answer3" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded">Nome della Quarta Carta</button>
+      </div>
     </div>
   </div>
-	<script src="src/index.js"></script>
-  </body>
+  <script src="src/index.js"></script>
+</body>
 </html>
