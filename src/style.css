@@ -532,6 +532,10 @@ video {
   margin-right: 12rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .flex {
   display: flex;
 }
@@ -546,6 +550,10 @@ video {
 
 .w-4\/5 {
   width: 80%;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .w-auto {
