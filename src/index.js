@@ -4,8 +4,6 @@ function getRandomCard() {
   return axios.get('https://api.scryfall.com/cards/random?q=' + query)
 }
 
-
-
 let get = true
 
 if (get) {
@@ -18,12 +16,20 @@ if (get) {
         e => {
           console.log(e)
           carta.style.backgroundImage = `url(${e.data.image_uris.art_crop})`;
-          for (let i = 0; i < 4; i++) {
-            document.querySelector("#answer" + i).textContent = r[i].data.printed_name
-          }
+          creaElementi(r)
         }
       )
       
     }
   ) 
+}
+
+function creaElementi(r) {
+  const container = document.getElementById('container-bottoni')
+  for (let i = 0; i < 4; i++) {
+    const node = document.createElement('button')
+    node.classList.add('bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto')
+    node.textContent = r[i].data.printed_name
+    container.appendChild(node)
+  }
 }
