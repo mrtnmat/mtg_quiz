@@ -52,7 +52,8 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
           })
 
           //rendi visibile
-          const caricamento = document.getElementById('caricamento').remove()
+          const caricamento = document.getElementById('caricamento')
+          caricamento.remove('')
           carta.classList.remove('invisible')
           container.classList.remove('invisible')
         }
