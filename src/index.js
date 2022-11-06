@@ -37,9 +37,18 @@ function buttonClickHandler(carte, indiceCartaVincente) {
       let txtWinTextContent
       let buttonClassList
       if (winningCard.data.printed_name === button.textContent) {
-        txtWinClassList = ['bg-teal-500', 'hover:bg-teal-400']
+        txtWinClassList = ['bg-teal-500']
         txtWinTextContent = '👑👑👑 Hai vinto! 👑👑👑'
         buttonClassList = ['bg-green-500', 'hover:bg-green-400']
+        setInterval(_ => {
+          if (txtWin.classList.contains('bg-teal-500')) {
+            txtWin.classList.remove('bg-teal-500')
+            txtWin.classList.add('bg-teal-300')
+          } else {
+            txtWin.classList.remove('bg-teal-300')
+            txtWin.classList.add('bg-teal-500')
+          }
+        }, 200);
       } else {
         txtWinClassList = ['bg-zinc-500', 'hover:bg-zinc-400']
         txtWinTextContent = 'Hai perso! ☹️'
