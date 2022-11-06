@@ -593,10 +593,6 @@ video {
   width: 80%;
 }
 
-.w-3\/5 {
-  width: 60%;
-}
-
 .w-full {
   width: 100%;
 }
@@ -689,9 +685,9 @@ video {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-xl {
@@ -747,8 +743,13 @@ video {
     height: 24rem;
   }
 
-  .md\:w-full {
-    width: 100%;
+  .md\:w-3\/5 {
+    width: 60%;
+  }
+
+  .md\:min-w-max {
+    min-width: -moz-max-content;
+    min-width: max-content;
   }
 
   .md\:grid-cols-2 {
