@@ -5,6 +5,10 @@ let STATE = {
 function getRandomCard() {
   let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it"]
   let query = a.join('+')
+  return axios({
+    url: 'https://api.scryfall.com/cards/random?q=' + query,
+    headers: {'Cache-Control': 'no-store'}
+  })
   return axios.get('https://api.scryfall.com/cards/random?q=' + query)
 }
 
