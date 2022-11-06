@@ -48,6 +48,5 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
           container.classList.remove('invisible')
         }
       )
-      
     }
   )
