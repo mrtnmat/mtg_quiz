@@ -4,6 +4,14 @@ function getRandomCard() {
   return axios.get('https://api.scryfall.com/cards/random?q=' + query)
 }
 
+function buttonClickHandler(winningCard, containerCarta) {
+  return (event) => {
+    if (winningCard.data.printed_name === event.target.textContent) {
+      containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
+    }
+  }
+}
+
 function creaBottoni() {
   const nodes = []
   for (let i = 0; i < 4; i++) {
@@ -38,6 +46,7 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
           const container = document.getElementById('container-bottoni')
           const shuffledCardsIt = shuffleArray(cardsIt)
           buttons.forEach((btn, i) => {
+            btn.addEventListener('click', buttonClickHandler(cardsIt[0], carta))
             btn.textContent = shuffledCardsIt[i].data.printed_name
             container.appendChild(btn)
           })
