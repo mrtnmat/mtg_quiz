@@ -3,7 +3,7 @@ let STATE = {
 }
 
 function getRandomCard() {
-  let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it"]
+  let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it", `d:${Date.now().toString()}`]
   let query = a.join('+')
   return axios({
     url: 'https://api.scryfall.com/cards/random?q=' + query,
