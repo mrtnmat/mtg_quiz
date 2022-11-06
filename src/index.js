@@ -8,7 +8,7 @@ function creaBottoni() {
   const nodes = []
   for (let i = 0; i < 4; i++) {
     const node = document.createElement('button')
-    node.classList.add('bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto')
+    node.classList.add('text-xl', 'bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto')
     nodes.push(node)    
   }
   return nodes
@@ -41,6 +41,11 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
             btn.textContent = shuffledCardsIt[i].data.printed_name
             container.appendChild(btn)
           })
+
+          //rendi visibile
+          const caricamento = document.getElementById('caricamento').remove()
+          carta.classList.remove('invisible')
+          container.classList.remove('invisible')
         }
       )
       
