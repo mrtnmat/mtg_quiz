@@ -14,15 +14,20 @@ function getCard(set, collector_number) {
   return axios.get(`https://api.scryfall.com/cards/${set}/${collector_number}`)
 }
 
-function buttonClickHandler(winningCard, containerCarta, txtWin) {
+function buttonClickHandler(carte, indiceCartaVincente) {
   return (event) => {
     const button = event.target
+    const txtWin = document.getElementById('sottotitolo')
+    const immagineCarta = document.querySelector(`.immagine-carta[carta="${button.attributes.carta.value}"]`)
+    const immagineCartaVincente = document.querySelector(`.immagine-carta[carta="${indiceCartaVincente}"]`)
+    const winningCard = carte[indiceCartaVincente]
+
     if (!STATE.gameOver) {
       STATE.gameOver = true
       filterClassesDEST(button, 'bg-')
       filterClassesDEST(button, 'hover:bg-')
       
-      containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
+      immagineCartaVincente.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
       
       let txtWinClassList
       let txtWinTextContent
@@ -41,8 +46,8 @@ function buttonClickHandler(winningCard, containerCarta, txtWin) {
       button.classList.add(...buttonClassList)
       
       //ridimensiona carta
-      filterClassesDEST(containerCarta, 'h-')
-      containerCarta.classList.add('h-144')
+      filterClassesDEST(immagineCarta, 'h-')
+      immagineCarta.classList.add('h-144')
       
       //retry sul sottotitolo
       txtWin.addEventListener('click', refreshHandler())
@@ -101,7 +106,7 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
       const container = document.getElementById('container-bottoni')
       const sottotitolo = document.getElementById('sottotitolo')
       buttons.forEach((btn, i) => {
-        btn.addEventListener('click', buttonClickHandler(cardsIt[n], immaginiCarte[n], sottotitolo))
+        btn.addEventListener('click', buttonClickHandler(cardsIt, n, immaginiCarte[n], sottotitolo))
         btn.textContent = cardsIt[i].data.printed_name === null ? cardsIt[i].data.name : cardsIt[i].data.printed_name
         container.appendChild(btn)
       })
