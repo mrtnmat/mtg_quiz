@@ -1,3 +1,7 @@
+let STATE = {
+  win: false
+}
+
 function getRandomCard() {
   let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it"]
   let query = a.join('+')
@@ -6,15 +10,20 @@ function getRandomCard() {
 
 function buttonClickHandler(winningCard, containerCarta) {
   return (event) => {
-    const button = event.target
-    filterClassesDEST(button, 'bg-')
-    filterClassesDEST(button, 'hover:bg-')
-
-    if (winningCard.data.printed_name === button.textContent) {
-      containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
-      button.classList.add('bg-green-500', 'hover:bg-green-400')
-    } else {
-      button.classList.add('bg-red-500', 'hover:bg-red-400')
+    if (!STATE.win) {
+      const button = event.target
+      filterClassesDEST(button, 'bg-')
+      filterClassesDEST(button, 'hover:bg-')
+  
+      if (winningCard.data.printed_name === button.textContent) {
+        STATE.win = true
+        containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
+        filterClassesDEST(containerCarta, 'h-')
+        containerCarta.classList.add('h-160')
+        button.classList.add('bg-green-500', 'hover:bg-green-400')
+      } else {
+        button.classList.add('bg-red-500', 'hover:bg-red-400')
+      } 
     }
   }
 }
