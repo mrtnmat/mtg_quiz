@@ -1,5 +1,5 @@
 let STATE = {
-  win: false
+  gameOver: false
 }
 
 function getRandomCard() {
@@ -10,26 +10,31 @@ function getRandomCard() {
 
 function buttonClickHandler(winningCard, containerCarta, txtWin) {
   return (event) => {
-    if (!STATE.win) {
+    if (!STATE.gameOver) {
+      STATE.gameOver = true
       const button = event.target
       filterClassesDEST(button, 'bg-')
       filterClassesDEST(button, 'hover:bg-')
   
+      containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
       if (winningCard.data.printed_name === button.textContent) {
-        STATE.win = true
-        containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
-        //ridimensiona carta
-        filterClassesDEST(containerCarta, 'h-')
-        containerCarta.classList.add('h-160')
         //sottotitolo
         sottotitolo.classList.add('bg-teal-500', 'hover:bg-teal-400', 'rounded', 'text-white')
-        sottotitolo.textContent = 'Hai vinto!'
-        sottotitolo.addEventListener('click', refreshHandler())
+        sottotitolo.textContent = '👑👑👑 Hai vinto! 👑👑👑'
         //cambia colore al bottone
         button.classList.add('bg-green-500', 'hover:bg-green-400')
       } else {
+        //sottotitolo
+        sottotitolo.classList.add('bg-zinc-500', 'hover:bg-zinc-400', 'rounded', 'text-white')
+        sottotitolo.textContent = 'Hai perso! ☹️'
+        //cambia colore al bottone
         button.classList.add('bg-red-500', 'hover:bg-red-400')
-      } 
+      }
+      //ridimensiona carta
+      filterClassesDEST(containerCarta, 'h-')
+      containerCarta.classList.add('h-144')
+      //retry sul sottotitolo
+      sottotitolo.addEventListener('click', refreshHandler())
     }
   }
 }

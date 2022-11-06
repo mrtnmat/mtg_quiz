@@ -8,7 +8,7 @@ module.exports = {
         'magic': ['Beleren\\ Bold', 'sans-serif']
       },
       height: {
-        '160': '40rem',
+        '144': '36rem',
       }
     },
   },
