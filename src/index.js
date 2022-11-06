@@ -1,5 +1,5 @@
 function getRandomCard() {
-  let a = ['-is:split', '-is:flip', "-set:sunf", "lang:it"]
+  let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it"]
   let query = a.join('+')
   return axios.get('https://api.scryfall.com/cards/random?q=' + query)
 }
