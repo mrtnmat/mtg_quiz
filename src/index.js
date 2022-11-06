@@ -47,7 +47,7 @@ function creaBottoni() {
   const nodes = []
   for (let i = 0; i < 4; i++) {
     const node = document.createElement('button')
-    node.classList.add('text-xl', 'bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto')
+    node.classList.add('text-xl', 'bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto', 'min-w-max')
     nodes.push(node)    
   }
   return nodes
