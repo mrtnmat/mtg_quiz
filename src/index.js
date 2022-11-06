@@ -20,7 +20,8 @@ function getCard(set, collector_number) {
 function buttonClickHandler(carte, indiceCartaVincente) {
   return (event) => {
     const button = event.target
-    const txtWin = document.getElementById('sottotitolo')
+    const sottotitolo = document.getElementById('sottotitolo')
+    const txtWin = document.getElementById('risultato')
     const immagineCarta = document.querySelector(`.immagine-carta[carta="${button.attributes.carta.value}"]`)
     const immagineCartaVincente = document.querySelector(`.immagine-carta[carta="${indiceCartaVincente}"]`)
     const winningCard = carte[indiceCartaVincente]
@@ -36,14 +37,16 @@ function buttonClickHandler(carte, indiceCartaVincente) {
       let txtWinTextContent
       let buttonClassList
       if (winningCard.data.printed_name === button.textContent) {
-        txtWinClassList = ['bg-teal-500', 'hover:bg-teal-400', 'rounded', 'text-white']
+        txtWinClassList = ['bg-teal-500', 'hover:bg-teal-400']
         txtWinTextContent = '👑👑👑 Hai vinto! 👑👑👑'
         buttonClassList = ['bg-green-500', 'hover:bg-green-400']
       } else {
-        txtWinClassList = ['bg-zinc-500', 'hover:bg-zinc-400', 'rounded', 'text-white']
+        txtWinClassList = ['bg-zinc-500', 'hover:bg-zinc-400']
         txtWinTextContent = 'Hai perso! ☹️'
         buttonClassList = ['bg-red-500', 'hover:bg-red-400']
       }
+      sottotitolo.classList.add('hidden')
+      txtWin.classList.remove('hidden')
       txtWin.classList.add(...txtWinClassList)
       txtWin.textContent = txtWinTextContent
       button.classList.add(...buttonClassList)
