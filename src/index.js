@@ -1,6 +1,9 @@
 let STATE = {
-  gameOver: false
+  gameOver: false,
+  production: false
 }
+
+console.log = STATE.production ? () => {} : console.log
 
 function getRandomCard() {
   let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it", `d:${Date.now().toString()}`]
