@@ -6,6 +6,9 @@ module.exports = {
     extend: {
       fontFamily: {
         'magic': ['Beleren\\ Bold', 'sans-serif']
+      },
+      height: {
+        '160': '40rem',
       }
     },
   },
