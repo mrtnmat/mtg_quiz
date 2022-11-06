@@ -6,10 +6,22 @@ function getRandomCard() {
 
 function buttonClickHandler(winningCard, containerCarta) {
   return (event) => {
-    if (winningCard.data.printed_name === event.target.textContent) {
+    const button = event.target
+    filterClassesDEST(button, 'bg-')
+    filterClassesDEST(button, 'hover:bg-')
+
+    if (winningCard.data.printed_name === button.textContent) {
       containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
+      button.classList.add('bg-green-500', 'hover:bg-green-400')
+    } else {
+      button.classList.add('bg-red-500', 'hover:bg-red-400')
     }
   }
+}
+
+function filterClassesDEST(el, prefix) {
+  const classes = el.className.split(" ").filter(c => !c.startsWith(prefix));
+  el.className = classes.join(" ").trim();
 }
 
 function creaBottoni() {
