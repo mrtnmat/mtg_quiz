@@ -52,14 +52,26 @@ function buttonClickHandler(carte, indiceCartaVincente) {
       //retry sul sottotitolo
       txtWin.addEventListener('click', refreshHandler())
     } else {
-      document.querySelectorAll('.immagine-carta').forEach((e, i) => {
-        e.classList.add('hidden')
-        if (parseInt(button.attributes.carta.value) === i) {
-          e.classList.remove('hidden')
-        }
-      })
+      switchImage(button)
     }
   }
+}
+
+function buttonMouseoverHandler() {
+  return (event => {
+    if (STATE.gameOver) {
+      switchImage(event.target)
+    }
+  })
+}
+
+function switchImage(button) {
+  document.querySelectorAll('.immagine-carta').forEach((e, i) => {
+    e.classList.add('hidden')
+    if (parseInt(button.attributes.carta.value) === i) {
+      e.classList.remove('hidden')
+    }
+  })
 }
 
 function refreshHandler() {
@@ -107,6 +119,7 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
       const sottotitolo = document.getElementById('sottotitolo')
       buttons.forEach((btn, i) => {
         btn.addEventListener('click', buttonClickHandler(cardsIt, n, immaginiCarte[n], sottotitolo))
+        btn.addEventListener('mouseover', buttonMouseoverHandler())
         btn.textContent = cardsIt[i].data.printed_name === null ? cardsIt[i].data.name : cardsIt[i].data.printed_name
         container.appendChild(btn)
       })
