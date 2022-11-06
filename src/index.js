@@ -7,7 +7,6 @@ function getRandomCard() {
   let query = a.join('+')
   return axios({
     url: 'https://api.scryfall.com/cards/random?q=' + query,
-    headers: {'Cache-Control': 'no-cache, no-store, must-revalidate'}
   })
   //return axios.get('https://api.scryfall.com/cards/random?q=' + query)
 }
