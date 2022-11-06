@@ -8,36 +8,51 @@ function getRandomCard() {
   return axios({
     url: 'https://api.scryfall.com/cards/random?q=' + query,
   })
-  //return axios.get('https://api.scryfall.com/cards/random?q=' + query)
+}
+
+function getCard(set, collector_number) {
+  return axios.get(`https://api.scryfall.com/cards/${set}/${collector_number}`)
 }
 
 function buttonClickHandler(winningCard, containerCarta, txtWin) {
   return (event) => {
+    const button = event.target
     if (!STATE.gameOver) {
       STATE.gameOver = true
-      const button = event.target
       filterClassesDEST(button, 'bg-')
       filterClassesDEST(button, 'hover:bg-')
-  
+      
       containerCarta.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
+      
+      let txtWinClassList
+      let txtWinTextContent
+      let buttonClassList
       if (winningCard.data.printed_name === button.textContent) {
-        //sottotitolo
-        sottotitolo.classList.add('bg-teal-500', 'hover:bg-teal-400', 'rounded', 'text-white')
-        sottotitolo.textContent = '👑👑👑 Hai vinto! 👑👑👑'
-        //cambia colore al bottone
-        button.classList.add('bg-green-500', 'hover:bg-green-400')
+        txtWinClassList = ['bg-teal-500', 'hover:bg-teal-400', 'rounded', 'text-white']
+        txtWinTextContent = '👑👑👑 Hai vinto! 👑👑👑'
+        buttonClassList = ['bg-green-500', 'hover:bg-green-400']
       } else {
-        //sottotitolo
-        sottotitolo.classList.add('bg-zinc-500', 'hover:bg-zinc-400', 'rounded', 'text-white')
-        sottotitolo.textContent = 'Hai perso! ☹️'
-        //cambia colore al bottone
-        button.classList.add('bg-red-500', 'hover:bg-red-400')
+        txtWinClassList = ['bg-zinc-500', 'hover:bg-zinc-400', 'rounded', 'text-white']
+        txtWinTextContent = 'Hai perso! ☹️'
+        buttonClassList = ['bg-red-500', 'hover:bg-red-400']
       }
+      txtWin.classList.add(...txtWinClassList)
+      txtWin.textContent = txtWinTextContent
+      button.classList.add(...buttonClassList)
+      
       //ridimensiona carta
       filterClassesDEST(containerCarta, 'h-')
       containerCarta.classList.add('h-144')
+      
       //retry sul sottotitolo
-      sottotitolo.addEventListener('click', refreshHandler())
+      txtWin.addEventListener('click', refreshHandler())
+    } else {
+      document.querySelectorAll('.immagine-carta').forEach((e, i) => {
+        e.classList.add('hidden')
+        if (parseInt(button.attributes.carta.value) === i) {
+          e.classList.remove('hidden')
+        }
+      })
     }
   }
 }
@@ -55,48 +70,48 @@ function creaBottoni() {
   const nodes = []
   for (let i = 0; i < 4; i++) {
     const node = document.createElement('button')
+    node.setAttribute('carta', i)
     node.classList.add('text-xl', 'bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto', 'min-w-max')
     nodes.push(node)    
   }
   return nodes
 }
 
-function shuffleArray(array) {
-  const newArray = [...array];
-  for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()])
-  .then(
-    cardsIt => {
-      console.log(cardsIt)
-      axios.get(`https://api.scryfall.com/cards/${cardsIt[0].data.set}/${cardsIt[0].data.collector_number}`).then(
-        cardsEng => {
-          console.log(cardsEng)
-          const carta = document.querySelector("#immagine-carta")
-          carta.style.backgroundImage = `url(${cardsEng.data.image_uris.art_crop})`;
-
-          //aggiungi bottoni
-          const buttons = creaBottoni()
-          const container = document.getElementById('container-bottoni')
-          const shuffledCardsIt = shuffleArray(cardsIt)
-          const sottotitolo = document.getElementById('sottotitolo')
-          buttons.forEach((btn, i) => {
-            btn.addEventListener('click', buttonClickHandler(cardsIt[0], carta, sottotitolo))
-            btn.textContent = shuffledCardsIt[i].data.printed_name
-            container.appendChild(btn)
-          })
-
-          //rendi visibile
-          const caricamento = document.getElementById('caricamento')
-          caricamento.classList.add('hidden')
-          carta.classList.remove('hidden')
-          container.classList.remove('hidden')
-        }
-      )
+.then(
+  cardsIt => {
+    console.log(cardsIt)
+    const n = getRandomInt(0,4)
+    getCard(cardsIt[n].data.set, cardsIt[n].data.collector_number).then(
+    winningCardEng => {
+      console.log("winning card: ", winningCardEng)
+      const immaginiCarte = document.querySelectorAll('.immagine-carta')
+      immaginiCarte.forEach((e, i) => {
+        e.style.backgroundImage = i == n ? `url(${winningCardEng.data.image_uris.art_crop}` : `url(${cardsIt[i].data.image_uris.large})`;
+      })
+      
+      //aggiungi bottoni
+      const buttons = creaBottoni()
+      const container = document.getElementById('container-bottoni')
+      const sottotitolo = document.getElementById('sottotitolo')
+      buttons.forEach((btn, i) => {
+        btn.addEventListener('click', buttonClickHandler(cardsIt[n], immaginiCarte[n], sottotitolo))
+        btn.textContent = cardsIt[i].data.printed_name === null ? cardsIt[i].data.name : cardsIt[i].data.printed_name
+        container.appendChild(btn)
+      })
+      
+      //rendi visibile
+      const caricamento = document.getElementById('caricamento')
+      caricamento.classList.add('hidden')
+      immaginiCarte[n].classList.remove('hidden')
+      container.classList.remove('hidden')
     }
+    )
+  }
   )
