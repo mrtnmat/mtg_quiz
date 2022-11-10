@@ -52,7 +52,7 @@ function endGame() {
     const sottotitolo = document.getElementById('sottotitolo')
     const txtWin = document.getElementById('risultato')
     const button = document.getElementById('submit-answer')
-
+    
     switchImage(STATE.winningCard.index)
     
     STATE.gameOver = true
@@ -90,9 +90,27 @@ function switchImage(cardN) {
 
 function changeHandler(e) {
   STATE.selected = parseInt(e.target.getAttribute('card'))
+  setLabelBorder(STATE.selected)
   if (STATE.gameOver) {
     switchImage(STATE.selected)
   }
+}
+
+function setLabelBorder(n) {
+  const transp = 'outline-transparent'
+  const color = 'outline-slate-600'
+  document.querySelectorAll('label').forEach((e, i) => {
+    if (i === n) {
+      e.classList.replace(transp, color)
+      e.classList.replace('bg-white', 'bg-black')
+      e.classList.replace('text-black', 'text-white')
+      
+    } else {
+      e.classList.replace(color, transp)
+      e.classList.replace('bg-black', 'bg-white')
+      e.classList.replace('text-white', 'text-black')
+    }
+  })
 }
 
 function loadingEnd() {

@@ -23,24 +23,24 @@
     <div carta=2 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div carta=3 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div id="immagine-crop" class="w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
-    <form method='' action='' name='answer' id='answer-form' class="hidden">
+    <form method='' action='' name='answer' id='answer-form' class="hidden m-2">
       <div>
-        <input type="radio" name="select-card" card=0 checked>
-        <label for="r1">Card 1</label>
+        <input class="hidden" type="radio" name="select-card" card=0 id="r1" checked>
+        <label class="outline outline-slate-600 px-2 my-3 bg-black text-white rounded-md text-xl" for="r1">Card 1</label>
       </div>
       <div>
-        <input type="radio" name="select-card" card=1>
-        <label for="r2">Card 2</label>
+        <input class="hidden" type="radio" name="select-card" card=1 id="r2">
+        <label class="outline outline-transparent px-2 my-3 bg-white text-black rounded-md text-xl" for="r2">Card 2</label>
       </div>
       <div>
-        <input type="radio" name="select-card" card=2>
-        <label for="r3">Card 3</label>
+        <input class="hidden" type="radio" name="select-card" card=2 id="r3">
+        <label class="outline outline-transparent px-2 my-3 bg-white text-black rounded-md text-xl" for="r3">Card 3</label>
       </div>
       <div>
-        <input type="radio" name="select-card" card=3>
-        <label for="r4">Card 4</label>
+        <input class="hidden" type="radio" name="select-card" card=3 id="r4">
+        <label class="outline outline-transparent px-2 my-3 bg-white text-black rounded-md text-xl" for="r4">Card 4</label>
       </div>
-      <input id="submit-answer" type='submit' name='submit' value="L'accendiamo" />
+      <input id="submit-answer" type='submit' name='submit' value="Invia Risposta" class="text-xl bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-auto min-w-max my-4"/>
     </form>
     <div id="container-bottoni" class="grid grid-cols-1 md:grid-cols-2 hidden gap-4 my-6">
     </div>
