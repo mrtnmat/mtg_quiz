@@ -6,4 +6,6 @@ Un semplice gioco sotto forma di applicazione Web: Viene mostrata l'arte di una 
 
 L'applicazione utilizza la libreria Axios per ottenere i dati dall'API di <a href="https://scryfall.com">Scryfall</a>.
 
-I componenti grafici sono tutti componenti base come \<div> e \<button>, stilati con il mini-framework <a href="https://tailwindcss.com/">Tailwind CSS</a>.
+I componenti grafici sono tutti componenti base come \<div> e \<input>, stilati con il mini-framework <a href="https://tailwindcss.com/">Tailwind CSS</a>.
+
+La scelta del nome della carta è fatta tramite radio button con il bottone reso invisibile in modo che si possano vedere soltanto i label.
