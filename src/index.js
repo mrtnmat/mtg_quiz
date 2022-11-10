@@ -1,43 +1,59 @@
 let STATE = {
   gameOver: false,
   production: false,
-  winningCard: null
 }
 
 console.log = STATE.production ? () => {} : console.log
+
+loadingScreen()
 
 function isWin() {
   const a = document.querySelectorAll('[type=radio]')
   return a[STATE.winningCard.index].checked
 }
 
-function checkedRadio() {
-  const a = document.querySelectorAll('[type=radio]')
-  a.forEach((e, i) => {
-    if (e.checked) {
-      return [i, e]
+function flashingColors(element) {
+  setInterval(_ => {
+    if (element.classList.contains('bg-teal-500')) {
+      element.classList.remove('bg-teal-500')
+      element.classList.add('bg-teal-300')
+    } else {
+      element.classList.remove('bg-teal-300')
+      element.classList.add('bg-teal-500')
     }
-  })
-  return null
+  }, 200);
 }
 
-const answer = document.getElementById('submit-answer')
-answer.addEventListener('click', e => {
-  e.preventDefault()
-  endGame()
-})
+function loadingScreen() {
+  const caricamento = document.getElementById('caricamento')
+  setInterval(_ => {
+    if (caricamento.textContent === "Caricamento...") {
+      caricamento.textContent = "Caricamento"
+    } else {
+      caricamento.textContent += "."
+    }
+  }, 800);
+}
+
+function getRandomCard() {
+  let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it", `d:${Date.now().toString()}`]
+  let query = a.join('+')
+  return axios({
+    url: 'https://api.scryfall.com/cards/random?q=' + query,
+  })
+}
+
+function getCard(set, collector_number) {
+  return axios.get(`https://api.scryfall.com/cards/${set}/${collector_number}`)
+}
 
 function endGame() {
   if (!STATE.gameOver) {
     const sottotitolo = document.getElementById('sottotitolo')
     const txtWin = document.getElementById('risultato')
     const button = document.getElementById('submit-answer')
-    console.log(STATE.winningCard)
-    //const immagineCarta = document.querySelector(`.immagine-carta[carta="${button.attributes.carta.value}"]`)
-    const immagineCartaVincente = document.querySelector(`.immagine-carta[carta="${STATE.winningCard.index}"]`)
-    //const winningCard = carte[indiceCartaVincente]
+
     switchImage(STATE.winningCard.index)
-    immagineCartaVincente.style.backgroundImage = `url(${STATE.winningCard.cardData.image_uris.large})`;
     
     STATE.gameOver = true
     
@@ -58,186 +74,89 @@ function endGame() {
     txtWin.classList.add(...txtWinClassList)
     txtWin.textContent = txtWinTextContent
     button.classList.add(...buttonClassList)
-    /*
-    //ridimensiona carta
-    filterClassesDEST(immagineCarta, 'h-')
-    immagineCarta.classList.add('h-144')
-    */
-    //retry sul sottotitolo
     txtWin.addEventListener('click', refreshHandler())
   }
 }
 
-function flashingColors(element) {
-  setInterval(_ => {
-    if (element.classList.contains('bg-teal-500')) {
-      element.classList.remove('bg-teal-500')
-      element.classList.add('bg-teal-300')
-    } else {
-      element.classList.remove('bg-teal-300')
-      element.classList.add('bg-teal-500')
-    }
-  }, 200);
-}
-
-function getRandomCard() {
-  let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it", `d:${Date.now().toString()}`]
-  let query = a.join('+')
-  return axios({
-    url: 'https://api.scryfall.com/cards/random?q=' + query,
-  })
-}
-
-function getCard(set, collector_number) {
-  return axios.get(`https://api.scryfall.com/cards/${set}/${collector_number}`)
-}
-
-function buttonClickHandler(carte, indiceCartaVincente) {
-  return (event) => {
-    const button = event.target
-    const sottotitolo = document.getElementById('sottotitolo')
-    const txtWin = document.getElementById('risultato')
-    const immagineCarta = document.querySelector(`.immagine-carta[carta="${button.attributes.carta.value}"]`)
-    const immagineCartaVincente = document.querySelector(`.immagine-carta[carta="${indiceCartaVincente}"]`)
-    const winningCard = carte[indiceCartaVincente]
-    
-    if (!STATE.gameOver) {
-      STATE.gameOver = true
-      filterClassesDEST(button, 'bg-')
-      filterClassesDEST(button, 'hover:bg-')
-      
-      immagineCartaVincente.style.backgroundImage = `url(${winningCard.data.image_uris.large})`;
-      
-      let txtWinClassList
-      let txtWinTextContent
-      let buttonClassList
-      if (winningCard.data.printed_name === button.textContent) {
-        txtWinClassList = ['bg-teal-500']
-        txtWinTextContent = '👑👑👑 Hai vinto! 👑👑👑'
-        buttonClassList = ['bg-green-500', 'hover:bg-green-400']
-        setInterval(_ => {
-          if (txtWin.classList.contains('bg-teal-500')) {
-            txtWin.classList.remove('bg-teal-500')
-            txtWin.classList.add('bg-teal-300')
-          } else {
-            txtWin.classList.remove('bg-teal-300')
-            txtWin.classList.add('bg-teal-500')
-          }
-        }, 200);
-      } else {
-        txtWinClassList = ['bg-zinc-500', 'hover:bg-zinc-400']
-        txtWinTextContent = 'Hai perso! ☹️'
-        buttonClassList = ['bg-red-500', 'hover:bg-red-400']
-      }
-      sottotitolo.classList.add('hidden')
-      txtWin.classList.remove('hidden')
-      txtWin.classList.add(...txtWinClassList)
-      txtWin.textContent = txtWinTextContent
-      button.classList.add(...buttonClassList)
-      
-      //ridimensiona carta
-      filterClassesDEST(immagineCarta, 'h-')
-      immagineCarta.classList.add('h-144')
-      
-      //retry sul sottotitolo
-      txtWin.addEventListener('click', refreshHandler())
-    } else {
-      switchImage(button)
-    }
-  }
-}
-
-
 function switchImage(cardN) {
+  hide(document.getElementById('immagine-crop'))
   document.querySelectorAll('.immagine-carta').forEach((e, i) => {
-    e.classList.add('hidden')
-    console.log("cardN ", cardN, " i ", i)
-    console.log(e)
+    hide(e)
     if (cardN === i) {
-      e.classList.remove('hidden')
-      console.log(e)
+      show(e)
     }
   })
 }
 
-function refreshHandler() {
-  return (_ => window.location.reload())
-}
-
-function filterClassesDEST(el, prefix) {
-  const classes = el.className.split(" ").filter(c => !c.startsWith(prefix));
-  el.className = classes.join(" ").trim();
-}
-
-function creaBottoni() {
-  const nodes = []
-  for (let i = 0; i < 4; i++) {
-    const node = document.createElement('button')
-    node.setAttribute('carta', i)
-    node.classList.add('text-xl', 'bg-blue-500', 'hover:bg-blue-400', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded', 'w-auto', 'min-w-max')
-    nodes.push(node)    
+function changeHandler(e) {
+  STATE.selected = parseInt(e.target.getAttribute('card'))
+  if (STATE.gameOver) {
+    switchImage(STATE.selected)
   }
-  return nodes
 }
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min);
+function loadingEnd() {
+  const caricamento = document.getElementById('caricamento')
+  const form = document.getElementById('answer-form')
+  const crop = document.getElementById('immagine-crop')
+  
+  caricamento.remove()
+  show(crop)
+  show(form)
 }
 
-Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()])
-.then(
-  cardsIt => {
-    console.log(cardsIt)
-    const n = getRandomInt(0,4)
-    getCard(cardsIt[n].data.set, cardsIt[n].data.collector_number).then(
-      winningCardEng => {
-        console.log("winning card: ", winningCardEng)
-        STATE.winningCard = {
-          index: n,
-          cardData: winningCardEng.data
-        }
+function setRadioButtonsName() {
+  const radio = document.querySelectorAll('[type=radio]+label')
+  radio.forEach((r, i) => {
+    r.textContent = STATE.cardsIt[i].data.printed_name === null ?
+    STATE.cardsIt[i].data.name :
+    STATE.cardsIt[i].data.printed_name
+  })
+}
 
-        //imposta immagini carte
-        const immaginiCarte = document.querySelectorAll('.immagine-carta')
-        //console.log(immaginiCarte)
-        immaginiCarte.forEach((e, i) => {
-          e.style.backgroundImage = e.getAttribute('carta') == 'crop'
-          ? `url(${winningCardEng.data.image_uris.art_crop}`
-          : `url(${cardsIt[i].data.image_uris.large})`;
-        })
-
-        //imposta nomi radio buttons
-        const radio = document.querySelectorAll('[type=radio]+label')
-        radio.forEach((r, i) => {
-          r.textContent = cardsIt[i].data.printed_name === null ? cardsIt[i].data.name : cardsIt[i].data.printed_name
-        })
-        
-        const container = document.getElementById('container-bottoni')
-        /*
-        //aggiungi bottoni
-        const buttons = creaBottoni()
-        const sottotitolo = document.getElementById('sottotitolo')
-        buttons.forEach((btn, i) => {
-          btn.addEventListener('click', buttonClickHandler(cardsIt, n, immaginiCarte[n], sottotitolo))
-          btn.addEventListener('mouseover', buttonMouseoverHandler())
-          btn.textContent = cardsIt[i].data.printed_name === null ? cardsIt[i].data.name : cardsIt[i].data.printed_name
-          container.appendChild(btn)
-        })
-        */
-        
-        //rendi visibile
-        const caricamento = document.getElementById('caricamento')
-        const form = document.getElementById('answer-form')
-
-        caricamento.classList.add('hidden')
-
-        const v = [immaginiCarte[4], container, form]
-        v.forEach(e => {
-          e.classList.remove('hidden')
-        })
+Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]).then(cardsIt => {
+  STATE.cardsIt = cardsIt
+  Promise.all([
+    getCard(cardsIt[0].data.set, cardsIt[0].data.collector_number),
+    getCard(cardsIt[1].data.set, cardsIt[1].data.collector_number),
+    getCard(cardsIt[2].data.set, cardsIt[2].data.collector_number),
+    getCard(cardsIt[3].data.set, cardsIt[3].data.collector_number)
+  ]).then( cardsEn => {
+    STATE.cardsEn = cardsEn
+    {
+      const n = getRandomInt(0,4)
+      STATE.winningCard = {
+        index: n,
+        cardData: STATE.cardsEn[n].data
       }
-    )
+    }
+    
+    //Assegna immagini ai container delle carte
+    const immaginiCarte = document.querySelectorAll('.immagine-carta')
+    immaginiCarte.forEach((e, i) => {
+      const art = STATE.cardsIt[i].data.image_status == "placeholder" ?
+      STATE.cardsEn[i].data.image_uris.large :
+      STATE.cardsIt[i].data.image_uris.large
+      e.style.backgroundImage = `url(${art})`
+    })
+    const cropArt = STATE.cardsEn[STATE.winningCard.index].data.image_uris.art_crop
+    const contCrop = document.querySelector('#immagine-crop')
+    contCrop.style.backgroundImage = `url(${cropArt})`
+    show(contCrop)
+    
+    //event listener sul submit del form
+    const answer = document.getElementById('submit-answer')
+    answer.addEventListener('click', e => {
+      e.preventDefault()
+      endGame()
+    })
+    
+    document.querySelectorAll('#answer-form [type=radio]').forEach(e => {
+      e.addEventListener('change', changeHandler)
+    })
+    setRadioButtonsName()
+    loadingEnd()
   }
+  )
+}
 )

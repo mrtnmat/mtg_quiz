@@ -17,27 +17,27 @@
     </div>
     <div id="sottotitolo" class="text-xl md:text-3xl text-center mb-6 py-2 md:px-6 w-full md:w-3/5">Indovina il nome della carta dall'immagine</div>
     <button id="risultato" class="text-xl md:text-3xl text-center mb-6 py-2 md:px-6 w-full md:w-3/5 text-white rounded hidden"></button>
-    <div id="caricamento" class="text-2xl md:text-8xl h-96 mt-32 font-serif">Caricamento...</div>
+    <div id="caricamento" class="text-2xl md:text-8xl h-96 mt-32 font-serif">Caricamento</div>
     <div carta=0 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div carta=1 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div carta=2 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div carta=3 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
-    <div carta="crop" class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
+    <div id="immagine-crop" class="w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <form method='' action='' name='answer' id='answer-form' class="hidden">
       <div>
-        <input type="radio" name="select-card" id="r1" checked>
+        <input type="radio" name="select-card" card=0 checked>
         <label for="r1">Card 1</label>
       </div>
       <div>
-        <input type="radio" name="select-card">
+        <input type="radio" name="select-card" card=1>
         <label for="r2">Card 2</label>
       </div>
       <div>
-        <input type="radio" name="select-card">
+        <input type="radio" name="select-card" card=2>
         <label for="r3">Card 3</label>
       </div>
       <div>
-        <input type="radio" name="select-card">
+        <input type="radio" name="select-card" card=3>
         <label for="r4">Card 4</label>
       </div>
       <input id="submit-answer" type='submit' name='submit' value="L'accendiamo" />
@@ -49,6 +49,7 @@
       <p class="text-sm text-slate-500">Copyright © 2022 Matteo Martini</p>
     </div>
   </div>
+  <script src="src/utils.js"></script>
   <script src="src/index.js"></script>
 </body>
 </html>
