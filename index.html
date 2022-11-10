@@ -22,11 +22,24 @@
     <div carta=1 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div carta=2 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
     <div carta=3 class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
-    <form method='' action='' name='answer' id='answer-form'>
-      <input type="radio" name="select-card" checked>
-      <input type="radio" name="select-card">
-      <input type="radio" name="select-card">
-      <input type="radio" name="select-card">
+    <div carta="crop" class="immagine-carta w-full pb-[90%] sm:p-0 sm:h-96 bg-no-repeat bg-center bg-contain hidden"></div>
+    <form method='' action='' name='answer' id='answer-form' class="hidden">
+      <div>
+        <input type="radio" name="select-card" id="r1" checked>
+        <label for="r1">Card 1</label>
+      </div>
+      <div>
+        <input type="radio" name="select-card">
+        <label for="r2">Card 2</label>
+      </div>
+      <div>
+        <input type="radio" name="select-card">
+        <label for="r3">Card 3</label>
+      </div>
+      <div>
+        <input type="radio" name="select-card">
+        <label for="r4">Card 4</label>
+      </div>
       <input id="submit-answer" type='submit' name='submit' value="L'accendiamo" />
     </form>
     <div id="container-bottoni" class="grid grid-cols-1 md:grid-cols-2 hidden gap-4 my-6">
