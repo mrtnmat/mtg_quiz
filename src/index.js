@@ -1,9 +1,20 @@
 let STATE = {
   gameOver: false,
-  production: false
+  production: false,
+  winningCard: null
 }
 
 console.log = STATE.production ? () => {} : console.log
+
+const answer = document.getElementById('submit-answer')
+answer.addEventListener('click', e => {
+  e.preventDefault()
+  const a = document.querySelectorAll('[type=radio]')
+  if (a[STATE.winningCard].checked) {
+    console.log('hai vinto!')
+  }
+  console.log(a)
+})
 
 function getRandomCard() {
   let a = ['-is:split', '-is:flip', "-set:sunf", "-is:transform", "-is:mdfc", "lang:it", `d:${Date.now().toString()}`]
@@ -120,6 +131,7 @@ Promise.all([getRandomCard(), getRandomCard(), getRandomCard(), getRandomCard()]
   cardsIt => {
     console.log(cardsIt)
     const n = getRandomInt(0,4)
+    STATE.winningCard = n
     getCard(cardsIt[n].data.set, cardsIt[n].data.collector_number).then(
     winningCardEng => {
       console.log("winning card: ", winningCardEng)
